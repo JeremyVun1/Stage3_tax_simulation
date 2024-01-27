@@ -26,4 +26,5 @@ Promotion of 10% every 5 years
 # Career model
 Typical slightly more aggressive career model with median male fulltime salary
 
-<img width="569" alt="image" src="https://github.com/JeremyVun1/Stage3_tax_simulation/assets/8108697/b6f7f37b-e051-4968-8975-b54de39e1b27">
+<img width="557" alt="image" src="https://github.com/JeremyVun1/Stage3_tax_simulation/assets/8108697/6b6b4d6d-aeb7-49e1-a4a4-e5ac9f543bd8">
+
