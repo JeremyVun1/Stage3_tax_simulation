@@ -35,26 +35,30 @@ if args.promo_growth > args.wage_growth:
     )
 
 salary = args.salary
+total_earnings = salary
 tax_history = {"no_change": [0], "stage3_original": [0], "stage3_amended": [0]}
 for i in range(args.working_years):
-    if (i + 1) % 5 == 0:
+    if (i + 1) % args.promo_freq == 0:
         salary *= args.promo_growth
     else:
         salary *= args.wage_growth
+    total_earnings += salary
     tax_history["no_change"].append(calc_tax(salary, current_brackets))
     tax_history["stage3_original"].append(calc_tax(salary, stage3_original))
     tax_history["stage3_amended"].append(calc_tax(salary, stage3_amended))
 
 
 # Tax Paid result
+total_tax_no_change = sum(tax_history["no_change"])
 total_tax_stage3_original = sum(tax_history["stage3_original"])
 total_tax_stage3_amended = sum(tax_history["stage3_amended"])
 total_tax_paid = {
-    "no_change": "${:,.2f}".format(sum(tax_history["no_change"])),
-    "stage3_original": "${:,.2f}".format(total_tax_stage3_original),
-    "stage3_amended": "${:,.2f}".format(total_tax_stage3_amended),
+    "no_change": f"{"${:,.2f}".format(total_tax_no_change)} - {"{:.2f}%".format(total_tax_no_change / total_earnings * 100)}",
+    "stage3_original": f"{"${:,.2f}".format(total_tax_stage3_original)} - {"{:.2f}%".format(total_tax_stage3_original / total_earnings * 100)}",
+    "stage3_amended": f"{"${:,.2f}".format(total_tax_stage3_amended)} - {"{:.2f}%".format(total_tax_stage3_amended / total_earnings * 100)}",
 }
-print("\nTotal Tax Paid")
+print(f"\nTotal Earnings: {"${:,.2f}".format(total_earnings)}")
+print("Total Tax Paid")
 print(json.dumps(total_tax_paid, indent=4))
 
 additional_tax = total_tax_stage3_amended - total_tax_stage3_original
